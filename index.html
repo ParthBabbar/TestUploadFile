@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Test Upload</title>
+</head>
+<body onload="myFunction()">
+
+    <h1>Folder Upload</h1>
+    <h3>Select Folder</h3>
+    <button onclick="document.getElementById('myFile').click()">Choose Folder</button>
+    <input type="file" id="myFile" style="display:none" multiple size="50" onchange="myFunction()" webkitdirectory="" multiple> 
+    <h1>Selected Files</h1>
+
+    <table  id="demo"></table>
+
+    <script>
+        function myFunction() {
+
+            var x = document.getElementById("myFile");
+        
+            
+            
+            var Arr = [];
+            var txt = "";
+            if ('files' in x) {
+                if (x.files.length == 0) {
+                    txt = "Please Choose a Folder";
+                } else {
+                    txt += "<tr><td><strong> File name </strong></td><td><strong> File Size</strong></td></tr>";
+                    for (var i = 0; i < x.files.length; i++) {
+                        var t ="";
+                        var file = x.files[i];
+                        if ('name' in file) {
+                            t += "<tr><td>"+ file.name + " </td>";
+                        }
+                        if ('size' in file) {
+                            if(file.size>0 && file.size<1024){
+                                 t += "<td> " + file.size + " Bytes <td></tr>";
+                            }
+                            else{
+                                t += "<td> " + Math.floor(file.size/100) + " kb <td></tr>";
+                            }
+                        }
+                        txt +=t;
+                        Arr.push(t);
+                    }
+                }
+            }
+            else {
+                if (x.value == "") {
+                    txt += "Select one or more files.";
+                } else {
+                    txt += "The files property is not supported by your browser!";
+                    txt += "<br>The path of the selected file: " + x.value; // If the browser does not support the files property, it will return the path of the selected file instead. 
+                }
+            }
+            Arr.sort();
+            for(var i=0;i<Arr.length;i++){
+                console.log(Arr[i]);
+            }
+            document.getElementById("demo").innerHTML = txt;
+        }
+    </script>
+
+    
+
+</body>
+</html>
